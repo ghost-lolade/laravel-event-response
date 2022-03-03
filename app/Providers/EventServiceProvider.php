@@ -4,6 +4,12 @@ namespace App\Providers;
 
 use App\Events\LessonWatched;
 use App\Events\CommentWritten;
+use App\Events\AchievementUnlockedEvent;
+use App\Events\BadgeUnlockedEvent;
+use App\Listeners\CheckComments;
+use App\Listeners\CheckLessonWatched;
+use App\Listeners\UnlockUserAchievement;
+use App\Listeners\UnlockUserBadge;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
