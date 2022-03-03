@@ -47,7 +47,7 @@ class Achievement extends Model
         FIFTY_LESSONS_WATCHED
     ];
 
-    // public function user() {
-    //     return $this->belongsTo(User::class, 'user_id');
-    // }
+    public function getAchievementIDByName($achievement_name) {
+        return self::where('name', "=", $achievement_name)->get('id');
+    }
 }

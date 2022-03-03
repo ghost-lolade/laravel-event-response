@@ -20,4 +20,10 @@ class Badges extends Model
     const INTERMEDIATE = 4;
     const MASTER = 8;
     const ADVANCED = 10;
+
+    const BADGES_WON = [BEGINNER, INTERMEDIATE, MASTER, ADVANCED];
+
+    public function getBadgeIdByName($badge_name) {
+        
+    }
 }
