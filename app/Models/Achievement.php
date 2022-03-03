@@ -13,22 +13,17 @@ class Achievement extends Model
 
     protected $fillable = [
         'name',
-        'type'
+        'type',
+        'value'
     ];
+
+    const TYPE = ['Comments Written', 'Lessons Watched'];
 
     const FIRST_LESSON_WATCHED = 1;
     const FIVE_LESSONS_WATCHED = 5;
     const TEN_LESSONS_WATCHED = 10;
     const TWENTY_FIVE_LESSONS_WATCHED = 25;
     const FIFTY_LESSONS_WATCHED = 50;
-
-    // const LESSON_WATCHED = [
-    //     'First Lesson Watched',
-    //     '5 Lesson Watched',
-    //     '10 Lesson Watched',
-    //     '25 Lesson Watched',
-    //     '50 Lesson Watched',
-    // ];
 
     const FIRST_COMMENT_WRITTEN = 1;
     const THREE_COMMENTS_WRITTEN = 3;
@@ -42,5 +37,13 @@ class Achievement extends Model
         FIVE_COMMENTS_WRITTEN,
         TEN_COMMENTS_WRITTEN,
         TWENTY_COMMENTS_WRITTEN
+    ];
+
+    const LESSONS_WATCHED = [
+        FIRST_LESSON_WATCHED,
+        FIVE_LESSONS_WATCHED,
+        TEN_LESSONS_WATCHED,
+        TWENTY_FIVE_LESSONS_WATCHED,
+        FIFTY_LESSONS_WATCHED
     ];
 }

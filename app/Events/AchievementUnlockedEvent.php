@@ -16,7 +16,7 @@ class AchievementUnlockedEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $achievement;
+    public $achievement_name;
     public $user;
 
     /**
@@ -24,9 +24,9 @@ class AchievementUnlockedEvent
      *
      * @return void
      */
-    public function __construct(Achievement $achievement, User $user)
+    public function __construct(string $achievement_name, User $user)
     {
-        $this->achievement = $achievement;
+        $this->achievement_name = $achievement_name;
         $this->user = $user;
     }
 

@@ -9,6 +9,13 @@ class Badges extends Model
 {
     use HasFactory;
 
+    protected $table = 'badges';
+
+    protected $fillable = [
+        'name',
+        'value'
+    ];
+
     const BEGINNER = 0;
     const INTERMEDIATE = 4;
     const MASTER = 8;

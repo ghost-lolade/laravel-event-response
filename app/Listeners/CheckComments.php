@@ -30,7 +30,8 @@ class CheckComments
         $count = count($event->comment);
 
         if(in_array($count, Achievement::COMMENTS_WRITTEN)){
-            Event::fire(new AchievementUnlockedEvent());
+            $achievement = Achievement::where(['value'=>$count, 'type'=>Achievement::TYPE[0]])->first('name');
+            Event::fire(new AchievementUnlockedEvent($achievement, $event->comment->user));
         }
     }
 }
