@@ -6,6 +6,7 @@ use App\Events\CommentWritten;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use App\Models\Achievement;
+use App\Events\AchievementUnlockedEvent;
 
 class CheckComments
 {

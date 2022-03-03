@@ -46,4 +46,8 @@ class Achievement extends Model
         TWENTY_FIVE_LESSONS_WATCHED,
         FIFTY_LESSONS_WATCHED
     ];
+
+    // public function user() {
+    //     return $this->belongsTo(User::class, 'user_id');
+    // }
 }
