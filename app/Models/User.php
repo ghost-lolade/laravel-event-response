@@ -67,11 +67,21 @@ class User extends Authenticatable
 
     public function achievements()
     {
-        return $this->belogsToMany(Achievements::class);
+        return $this->belogsToMany(Achievement::class);
+    }
+
+    public function unlocked_achievements()
+    {
+        return $this->belongsToMany(Achievement::class)->wherePivot('unlocked', true);
     }
 
     public function badges()
     {
         return $this->belogsToMany(Badges::class);
+    }
+
+    public function unlocked_badges()
+    {
+        return $this->belongsToMany(Badges::class)->wherePivot('unlocked', true);
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUsersAchievementsTable extends Migration
+class CreateAchievementUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,8 @@ class CreateUsersAchievementsTable extends Migration
      */
     public function up()
     {
-        Schema::create('users_achievements', function (Blueprint $table) {
+        Schema::dropIfExists('users_achievements');
+        Schema::create('achievement_user', function (Blueprint $table) {
             $table->foreignId('user_id')->constrained();
             $table->foreignId('achievement_id')->constrained();
             $table->boolean('unlocked')->default(false);
@@ -27,6 +28,6 @@ class CreateUsersAchievementsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users_achievements');
+        Schema::dropIfExists('achievement_user');
     }
 }

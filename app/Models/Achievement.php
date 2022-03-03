@@ -9,7 +9,7 @@ class Achievement extends Model
 {
     use HasFactory;
 
-    protected $table = 'achievement';
+    protected $table = 'achievements';
 
     protected $fillable = [
         'name',
@@ -31,23 +31,17 @@ class Achievement extends Model
     const TEN_COMMENTS_WRITTEN = 10;
     const TWENTY_COMMENTS_WRITTEN = 20;
 
-    const COMMENTS_WRITTEN = [
-        FIRST_COMMENT_WRITTEN,
-        THREE_COMMENTS_WRITTEN,
-        FIVE_COMMENTS_WRITTEN,
-        TEN_COMMENTS_WRITTEN,
-        TWENTY_COMMENTS_WRITTEN
-    ];
+    const COMMENTS_WRITTEN = [1, 5, 10, 25, 50];
 
-    const LESSONS_WATCHED = [
-        FIRST_LESSON_WATCHED,
-        FIVE_LESSONS_WATCHED,
-        TEN_LESSONS_WATCHED,
-        TWENTY_FIVE_LESSONS_WATCHED,
-        FIFTY_LESSONS_WATCHED
-    ];
+    const LESSONS_WATCHED = [1, 3, 5, 10, 20];
 
-    public function getAchievementIDByName($achievement_name) {
-        return self::where('name', "=", $achievement_name)->get('id');
+    public function getAchievementIdByName($achievement_name) {
+        return self::where('name', "=", $achievement_name)->first('id');
+    }
+    public function getAchievementByValueAndType($achievement_value, $type) {
+        if($achievement_value == '' || $type == ''){
+            return null;
+        }
+        return self::where(['value'=>$achievement_value, 'type'=>$type])->first('name');
     }
 }
