@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\UserToAchievements;
 use App\Models\Achievement;
+use App\Models\Badges;
 use Illuminate\Http\Request;
 
 class AchievementsController extends Controller
@@ -53,13 +53,19 @@ class AchievementsController extends Controller
         if($next_achievement_for_comments && $next_achievement_for_lessons)
             array_push($next_available_achievements, $next_achievement_for_comments->name, $next_achievement_for_lessons->name);
 
-        return $next_available_achievements;
-        // return response()->json([
-        //     'unlocked_achievements' => $unlocked_achievements,
-        //     'next_available_achievements' => $next_available_achievements,
-        //     'current_badge' => '',
-        //     'next_badge' => '',
-        //     'remaing_to_unlock_next_badge' => 0
-        // ]);
+            //geting all user badges
+        $badges = $user->unlocked_badges()->get();
+        $current_badge = $badges->last()->name; //current badge is the last badg3e gotten by the user.
+        $next_badge_value = Badges::where('value', '>', $badges->last()->value)->min('value');
+        $next_badge = Badges::getBadgesByValue($next_badge_value)->name;
+
+        $remaing_to_unlock_next_badge =  $next_badge_value - count($achievements);
+        return response()->json([
+            'unlocked_achievements' => $unlocked_achievements,
+            'next_available_achievements' => $next_available_achievements,
+            'current_badge' => $current_badge,
+            'next_badge' => $next_badge,
+            'remaing_to_unlock_next_badge' => $remaing_to_unlock_next_badge
+        ]);
     }
 }

@@ -77,7 +77,7 @@ class User extends Authenticatable
 
     public function badges()
     {
-        return $this->belogsToMany(Badges::class);
+        return $this->belongsToMany(Badges::class);
     }
 
     public function unlocked_badges()

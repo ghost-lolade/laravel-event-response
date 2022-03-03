@@ -21,9 +21,13 @@ class Badges extends Model
     const MASTER = 8;
     const ADVANCED = 10;
 
-    const BADGES_WON = [BEGINNER, INTERMEDIATE, MASTER, ADVANCED];
+    const BADGES_WON = [0, 4, 8, 10];
 
     public function getBadgeIdByName($badge_name) {
         return self::where('name', "=", $badge_name)->first('id');  
+    }
+
+    public function getBadgesByValue($badge_value) {
+        return self::where('value', '=', $badge_value)->first();
     }
 }

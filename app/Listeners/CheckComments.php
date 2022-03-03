@@ -7,7 +7,6 @@ use App\Events\CommentWritten;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use App\Models\Achievement;
-use App\Models\UserToAchievements;
 use App\Models\Badges;
 use App\Events\AchievementUnlockedEvent;
 use App\Events\BadgeUnlockedEvent;
@@ -40,7 +39,7 @@ class CheckComments
             Event::fire(new AchievementUnlockedEvent($achievement_name, $user));
         }
 
-        $user_achievements = UserToAchievements::where('user_id', '=', $user->id)-get();
+        $user_achievements = $user->badges()->where('user_id', '=', $user->id)-get();
         $achievements_count = $user_achievements->count();
 
         if(in_array($achievements_count, Badges::BADGES_WON)) {
