@@ -60,16 +60,14 @@ class ExampleTest extends TestCase
     public function testCommentWrittenEvent()
     {
         Event::fake();
-        $user = User::factory()->create();
-        $response = $this->get("/users/{$user->id}/achievements");
+        $response = $this->get("/test-comment-written")->assertSuccessful();
         Event::assertDispatched(CommentWritten::class);
     }
 
     public function testLessonWatchedEvent()
     {
         Event::fake();
-        $user = User::factory()->create();
-        $response = $this->get("/users/{$user->id}/achievements");
+        $response = $this->get("/test-lesson-watched")->assertSuccessful();
         
         Event::assertDispatched(LessonWatched::class);
     }

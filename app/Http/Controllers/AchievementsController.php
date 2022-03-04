@@ -5,11 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Achievement;
 use App\Models\Badges;
-use App\Models\Comment;
-use App\Events\CommentWritten;
-use App\Models\Lesson;
-use App\Events\LessonWatched;
-use Illuminate\Support\Facades\Event;
 use Illuminate\Http\Request;
 
 class AchievementsController extends Controller
@@ -77,20 +72,12 @@ class AchievementsController extends Controller
 
         //getting next badge value, then getting the badge name
         $badge_value = $badges->last() && $badges->last()->value;
-        $next_badge_value = Badges::where('value', '>', )->min('value');
+        $next_badge_value = Badges::where('value', '>', $badge_value)->min('value');
         $next_badge = Badges::getBadgesByValue($next_badge_value)->name;
 
         // Since badges are gotten by number of achievements, then subtracting the current number achievement from the
         //next badge value is a simple way of getting remaining_to_unock_next_badge.
         $remaining_to_unlock_next_badge =  $next_badge_value - count($achievements);
-
-        $comment = Comment::factory()->create();
-
-        Event::dispatch(new CommentWritten($comment));
-
-        $lesson = Lesson::factory()->create();
-
-        Event::dispatch(new LessonWatched($lesson, $user));
         
         return response()->json([
             'unlocked_achievements' => $unlocked_achievements,

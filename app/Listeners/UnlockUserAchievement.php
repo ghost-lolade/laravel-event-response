@@ -32,6 +32,7 @@ class UnlockUserAchievement
         $user_id = $event->user->id;
         $achievement_id = Achievement::getAchievementIdByName($event->achievement_name);
 
+        // Updating the database according if the AchievementUnlockedEvent is fired.
         $achievement = new UserToAchievement();
         $achievement->user_id = $user_id;
         $achievement->achievement_id = $achievement_id;
