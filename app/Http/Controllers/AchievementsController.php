@@ -22,7 +22,7 @@ class AchievementsController extends Controller
         $next_value_2 = '';//Next value of achievement for lessons watched type.
         $type1 = '';
         $type2 = '';
-        $badge_value = '';
+        $current_badge_value = 0;
 
 
         $achievements = $user->unlocked_achievements()->get(); //getting all user unlocked achievements
@@ -58,8 +58,6 @@ class AchievementsController extends Controller
         //using the values and type to fetch the next achievements.
         // It is certain that next available achievement will be two as there are two types of achievement.
         // If more a for loop would be a better solution to avoid repititon of codes.
-
-
         $next_achievement_for_comments = Achievement::getAchievementByValueAndType($next_value_1, $type1);
         $next_achievement_for_lessons = Achievement::getAchievementByValueAndType($next_value_2, $type2);
         if($next_achievement_for_comments && $next_achievement_for_lessons)
@@ -71,8 +69,10 @@ class AchievementsController extends Controller
         $current_badge = $badges->last() ? $badges->last()->name : $current_badge; //current badge is the last badge gotten by the user.
 
         //getting next badge value, then getting the badge name
-        $badge_value = $badges->last() && $badges->last()->value;
+        $badge_value = $badges->last() ? $badges->last()->value : $current_badge_value;
         $next_badge_value = Badges::where('value', '>', $badge_value)->min('value');
+
+        //  getting next badge by the next badge value
         $next_badge = Badges::getBadgesByValue($next_badge_value)->name;
 
         // Since badges are gotten by number of achievements, then subtracting the current number achievement from the
