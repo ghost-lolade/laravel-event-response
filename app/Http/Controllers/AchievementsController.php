@@ -18,10 +18,11 @@ class AchievementsController extends Controller
         $current_badge = '';
         $next_badge = '';
         $remaining_to_unlock_next_badge = 0;
-        $next_value_1 = ''; //Next value of achievement for comments written type.
-        $next_value_2 = '';//Next value of achievement for lessons watched type.
-        $type1 = '';
-        $type2 = '';
+        // The next available achievements are First lesson watched and First Comments Written by default.
+        $next_value_1 = Achievement::where('type', '=', Achievement::TYPE[0])->first()->value; 
+        $next_value_2 = Achievement::where('type', '=', Achievement::TYPE[0])->first()->value;
+        $type1 = Achievement::TYPE[0];
+        $type2 = Achievement::TYPE[1];
         $current_badge_value = 0;
 
 
@@ -44,14 +45,6 @@ class AchievementsController extends Controller
                 $next_value_2 = Achievement::where('value', '>', $achievement->value)->min('value');
                 $type2 = $achievement->type;
             }
-            else {
-                //making the first achievements for each type the default next values
-
-                $next_value_1 = Achievement::where('type', '=', Achievement::TYPE[0])->first('value');
-                $type1 = Achievement::TYPE[0];
-                $next_value_2 = Achievement::where('type', '=', Achievement::TYPE[1])->first('value');
-                $type2 = Achievement::TYPE[1];
-            }
         }
 
 
@@ -61,12 +54,15 @@ class AchievementsController extends Controller
         $next_achievement_for_comments = Achievement::getAchievementByValueAndType($next_value_1, $type1);
         $next_achievement_for_lessons = Achievement::getAchievementByValueAndType($next_value_2, $type2);
         if($next_achievement_for_comments && $next_achievement_for_lessons)
-            array_push($next_available_achievements, $next_achievement_for_comments->name, $next_achievement_for_lessons->name);
+            array_push($next_available_achievements, $next_achievement_for_comments, $next_achievement_for_lessons);
 
 
         //geting all user badges
         $badges = $user->unlocked_badges()->get();
-        $current_badge = $badges->last() ? $badges->last()->name : $current_badge; //current badge is the last badge gotten by the user.
+
+        //current badge is the last badge gotten by the user, since 0 achievement is Beginner then 
+        //the current badge is Beginner.
+        $current_badge = $badges->last() ? $badges->last()->name : Badges::getBadgesByValue($current_badge_value)->name;
 
         //getting next badge value, then getting the badge name
         $badge_value = $badges->last() ? $badges->last()->value : $current_badge_value;

@@ -36,12 +36,9 @@ class Achievement extends Model
     const LESSONS_WATCHED = [1, 3, 5, 10, 20];
 
     public function getAchievementIdByName($achievement_name) {
-        return self::where('name', "=", $achievement_name)->first('id');
+        return self::where('name', "=", $achievement_name)->first()->id;
     }
     public function getAchievementByValueAndType($achievement_value, $type) {
-        if($achievement_value == '' || $type == ''){
-            return null;
-        }
-        return self::where(['value'=>$achievement_value, 'type'=>$type])->first('name');
+        return self::where(['value'=>$achievement_value, 'type'=>$type])->first()->name;
     }
 }

@@ -44,6 +44,7 @@ class ExampleTest extends TestCase
         $user = User::factory()->create();
         
         $response = $this->get("/users/{$user->id}/achievements");
+        echo response()->json($response);
 
         $this->assertIsArray($response->getData()->unlocked_achievements);
         $this->assertIsArray($response->getData()->next_available_achievements);
