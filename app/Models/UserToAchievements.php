@@ -9,5 +9,6 @@ class UserToAchievements extends Model
 {
     use HasFactory;
 
-    protected $table = 'users_achievements';
+    protected $table = 'achievement_user';
+    public $timestamps = false;
 }

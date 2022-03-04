@@ -6,6 +6,7 @@ use App\Events\BadgeUnlockedEvent;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use App\Models\UserToBadges;
+use App\Models\Badges;
 
 class UnlockUserBadge
 {
@@ -28,11 +29,11 @@ class UnlockUserBadge
     public function handle(BadgeUnlockedEvent $event)
     {
         $user_id = $event->user->id;
-        $badge_id = badge::getBadgeIdByName($event->badge_name);
+        $badge_id = Badges::getBadgeIdByName($event->badge_name);
 
         $badge = new UserToBadges();
         $badge->user_id = $user_id;
-        $badge->badge_id = $badge_id;
+        $badge->badges_id = $badge_id ? $badge_id : 1;
         $badge->unlocked = true;
         $badge->save();
     }

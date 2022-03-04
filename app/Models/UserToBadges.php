@@ -8,5 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class UserToBadges extends Model
 {
     use HasFactory;
-    protected $table = 'users_badges';
+    protected $table = 'badges_user';
+    public $timestamps = false;
 }

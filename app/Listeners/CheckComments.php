@@ -36,15 +36,15 @@ class CheckComments
 
         if(in_array($count, Achievement::COMMENTS_WRITTEN)){
             $achievement_name = Achievement::where(['value'=>$count, 'type'=>Achievement::TYPE[0]])->first('name');
-            Event::fire(new AchievementUnlockedEvent($achievement_name, $user));
+            Event::dispatch(new AchievementUnlockedEvent($achievement_name, $user));
         }
 
-        $user_achievements = $user->badges()->where('user_id', '=', $user->id)-get();
+        $user_achievements = $user->badges()->where('user_id', '=', $user->id)->get();
         $achievements_count = $user_achievements->count();
 
         if(in_array($achievements_count, Badges::BADGES_WON)) {
             $badge_name = Badges::where('value', '=', $achievements_count)->first('name');
-            Event::fire(new BadgeUnlockedEvent($badge_name, $user));
+            Event::dispatch(new BadgeUnlockedEvent($badge_name, $user));
         }
     }
 }
