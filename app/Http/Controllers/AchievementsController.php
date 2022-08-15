@@ -72,7 +72,7 @@ class AchievementsController extends Controller
         $next_badge = Badges::getBadgesByValue($next_badge_value)->name;
 
         // Since badges are gotten by number of achievements, then subtracting the current number achievement from the
-        //next badge value is a simple way of getting remaining_to_unock_next_badge.
+        //next_badge_value is a simple way of getting remaining_to_unock_next_badge.
         $remaining_to_unlock_next_badge =  $next_badge_value - count($achievements);
         
         return response()->json([
